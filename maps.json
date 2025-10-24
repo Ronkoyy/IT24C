@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Jollibee",
+    "Title": "Jollibee Fast Food Restaurant",
+    "description": "I like the fried chicken here.",
+    "img": "jabe.jpg",
+    "lat": 8.367384,
+    "lng": 124.865311
+  },
+  {
+    "name": "Krominch Food Hauz",
+    "Title": "Krominch Food Hauz",
+    "description": "I like the Burger here.",
+    "img": "burger.jpg",
+    "lat": 8.367365,
+    "lng": 124.866829
+  },
+  {
+    "name": "Pizza Kid",
+    "Title": "Pizza Kid",
+    "description": "I like the Pizza here.",
+    "img": "Pizza.jpg",
+    "lat": 8.356368,
+    "lng": 124.864844
+  }
+]

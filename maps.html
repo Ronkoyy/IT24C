@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maps</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>My Favorite Food Stop</h1>
+  <div id="map"></div>
+
+  <script>
+    function initMap(mapDataUrl) {
+      const map = L.map("map").setView([8.367384, 124.865311], 17);
+
+      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      }).addTo(map);
+
+      fetch(mapDataUrl)
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((pin) => {
+            const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+            marker.bindPopup(`
+              <b>${pin.name}</b><br>
+              ${pin.description}<br>
+              <img src="${pin.img}" alt="${pin.name}" width="150" style="margin-top:5px;">
+            `);
+          });
+        })
+        .catch((err) => console.error("Error loading JSON:", err));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      initMap("maps.json");
+    });
+  </script>
+</body>
+</html>

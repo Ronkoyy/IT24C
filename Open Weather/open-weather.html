@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated browser tab title --><title>My Weather App</title>
-    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome for icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    \<title>My Weather App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d1117; 
+            background-color: #0d1117;
         }
         .card {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
@@ -27,7 +28,7 @@
             background-color: #2e6093;
             transform: scale(1.02);
         }
-
+        
         .modal-backdrop {
             background-color: rgba(0, 0, 0, 0.7);
         }
@@ -35,9 +36,9 @@
 </head>
 <body class="min-h-screen flex items-start justify-center p-4">
 
-        <div class="w-full max-w-lg mt-10">
+   <div class="w-full max-w-lg mt-10">
         <header class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-white mb-2">My Weather App</h1>
+           <h1 class="text-4xl font-bold text-white mb-2">My Weather App</h1>
             <p class="text-gray-400">Search for current weather by city name.</p>
         </header>
 
@@ -63,13 +64,14 @@
             <div class="flex flex-col sm:flex-row items-center justify-between mb-6 border-b border-gray-700 pb-4">
                 <h2 id="cityName" class="text-4xl font-extrabold text-blue-400"></h2>
                 <div class="flex items-center mt-2 sm:mt-0">
+                  
                     <img id="weatherIcon" src="" alt="Weather Icon" class="w-16 h-16">
                     <p id="description" class="text-xl font-medium text-gray-200 capitalize ml-3"></p>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-6 text-gray-300">
-                <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
+              <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
                     <span class="text-sm font-light text-gray-400 flex items-center">
                         <i class="fas fa-thermometer-half mr-2 text-blue-300"></i>Temperature
                     </span>
@@ -77,7 +79,7 @@
                     <p class="text-xs text-gray-400">Celsius</p>
                 </div>
 
-                <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
+               <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
                     <span class="text-sm font-light text-gray-400 flex items-center">
                         <i class="fas fa-water mr-2 text-blue-300"></i>Humidity
                     </span>
@@ -93,7 +95,7 @@
                     <p class="text-xs text-gray-400">hPa</p>
                 </div>
 
-                <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
+               <div class="flex flex-col p-4 bg-gray-700 rounded-lg">
                     <span class="text-sm font-light text-gray-400 flex items-center">
                         <i class="fas fa-wind mr-2 text-blue-300"></i>Wind Speed
                     </span>
@@ -103,8 +105,8 @@
             </div>
         </div>
         
-        <div id="messageBox" class="hidden bg-yellow-800 text-white p-4 rounded-lg mt-8 font-medium">
-        </div>
+       <div id="messageBox" class="hidden bg-yellow-800 text-white p-4 rounded-lg mt-8 font-medium">
+            </div>
     </div>
 
     <div id="errorModal" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50">
@@ -118,11 +120,10 @@
     </div>
 
     <script>
-        
+   
         const API_KEY = '087c63d4f2bdc8a29e9262521bb2cd38';
         const BASE_URL = 'https://api.openweathermap.org/data/2.5/weather';
 
-       
         const cityInput = document.getElementById('cityInput');
         const searchButton = document.getElementById('searchButton');
         const buttonText = document.getElementById('buttonText');
@@ -135,49 +136,53 @@
         const pressureEl = document.getElementById('pressure');
         const pressureLabelEl = document.getElementById('pressureLabel');
         const windSpeedEl = document.getElementById('windSpeed');
-        const descriptionEl = document.getElementById('description'); // This is the element for the description
+        const descriptionEl = document.getElementById('description');
         const weatherIconEl = document.getElementById('weatherIcon');
-
         const errorModal = document.getElementById('errorModal');
         const modalMessageEl = document.getElementById('modalMessage');
 
-        
+    
+     
         function showMessage(message, isError = false) {
             messageBox.textContent = message;
-            messageBox.className = p-4 rounded-lg mt-8 font-medium ${isError ? 'bg-red-800' : 'bg-yellow-800'};
+            messageBox.className = `p-4 rounded-lg mt-8 font-medium ${isError ? 'bg-red-800' : 'bg-yellow-800'}`;
             messageBox.classList.remove('hidden');
             weatherCard.classList.add('hidden');
         }
 
+       
         function showErrorModal(message) {
             modalMessageEl.textContent = message;
             errorModal.classList.remove('hidden');
             errorModal.classList.add('flex');
         }
 
-        
+       
         window.closeModal = function() {
             errorModal.classList.add('hidden');
             errorModal.classList.remove('flex');
         }
 
-        
+
         function displayWeather(data) {
-           
+            
             const pressure = data.main.sea_level || data.main.pressure;
             const pressureLabel = data.main.sea_level ? 'Sea Level' : 'Atmospheric Pressure';
             
+           
+            const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
             
-            const iconUrl = https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png;
-            
-            cityNameEl.textContent = ${data.name}, ${data.sys.country};
-            temperatureEl.textContent = ${Math.round(data.main.temp)}°;
-            humidityEl.textContent = ${data.main.humidity}%;
-            pressureEl.textContent = ${pressure} hPa;
-            pressureLabelEl.innerHTML = <i class="fas fa-wind mr-2 text-blue-300"></i>${pressureLabel}; // Updated: Used 'fas fa-wind' for pressure too, as it was in the original plan.
-            windSpeedEl.textContent = ${data.wind.speed.toFixed(1)} m/s;
+            cityNameEl.textContent = `${data.name}, ${data.sys.country}`;
+            temperatureEl.textContent = `${Math.round(data.main.temp)}°`;
+            humidityEl.textContent = `${data.main.humidity}%`;
+            pressureEl.textContent = `${pressure} hPa`;
+           
+            pressureLabelEl.innerHTML = `<i class="fas fa-wind mr-2 text-blue-300"></i>${pressureLabel}`; 
+            windSpeedEl.textContent = `${data.wind.speed.toFixed(1)} m/s`;
             descriptionEl.textContent = data.weather[0].description;
-            weatherIconEl.src = iconUrl;
+            
+            
+            weatherIconEl.src = iconUrl; 
             weatherIconEl.alt = data.weather[0].description;
             
             
@@ -185,7 +190,7 @@
             messageBox.classList.add('hidden');
         }
 
-        
+       
         async function fetchWeather() {
             const city = cityInput.value.trim();
             if (!city) {
@@ -200,7 +205,7 @@
             weatherCard.classList.add('hidden');
 
             
-            const url = ${BASE_URL}?q=${city}&units=metric&appid=${API_KEY};
+            const url = `${BASE_URL}?q=${city}&units=metric&appid=${API_KEY}`;
             
             try {
                 const response = await fetch(url);
@@ -208,10 +213,10 @@
 
                 if (response.status === 404 || data.cod === '404') {
                     
-                    showMessage(City not found: "${city}". Please check the spelling and try again., true);
+                    showMessage(`City not found: "${city}". Please check the spelling and try again.`, true);
                 } else if (!response.ok) {
                     
-                    showErrorModal(API Error (${data.cod || response.status}): ${data.message || 'Could not fetch weather data. Check your API key status.'});
+                    showErrorModal(`API Error (${data.cod || response.status}): ${data.message || 'Could not fetch weather data. Check your API key status.'}`);
                 } else {
                     displayWeather(data);
                 }
@@ -219,22 +224,24 @@
                 console.error('Fetch error:', error);
                 showErrorModal('A network error occurred. Please check your connection or API configuration.');
             } finally {
-                
+           
                 searchButton.disabled = false;
                 buttonText.textContent = 'Search Weather';
             }
         }
 
-        
+
         searchButton.addEventListener('click', fetchWeather);
 
-        
+       
         cityInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault(); 
                 fetchWeather();
             }
         });
+
+        
     </script>
 </body>
 </html>
